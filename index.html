@@ -1,0 +1,70 @@
+<html>
+<head>
+<title>Tela de edição</title>
+<script language="javascript">
+function carregarContextoCanvas(idCanvas){
+   var elemento = document.getElementById(idCanvas);
+   if(elemento && elemento.getContext){
+      var contexto = elemento.getContext('2d');
+      if(contexto){
+         return contexto;
+      }
+   }
+   return FALSE;
+}
+    
+ 
+
+
+window.onload = function(){
+    
+                    var largura = 780;
+                    var altura = 600;
+
+                    var quadro = document.getElementById("meucanvas");
+                    meucanvas.setAttribute("width", largura);
+                    meucanvas.setAttribute("height", altura);
+
+                    var ctx = meucanvas.getContext("2d");
+
+                    var desenhando = false;
+                    meucanvas.onmousedown = function (evt) {
+                    ctx.moveTo(evt.clientX, evt.clientY);
+                    desenhando = true;
+                    console.log(ctx);
+                }
+                    meucanvas.onmouseup = function () {
+                    desenhando = false;                
+                }
+                    meucanvas.onmousemove = function (evt) {
+                            if (desenhando) {
+                                ctx.lineTo(evt.clientX, evt.clientY);
+                                ctx.stroke();
+                            }
+                }
+   //Recebemos o elemento canvas
+   var ctx = carregarContextoCanvas('meucanvas');
+    
+   if(ctx){
+      //Crio uma imagem com um objeto Image de Javascript
+      var img = new Image();
+      //indico a URL da imagem
+      img.src = 'pic_the_scream.jpg';
+      //defino o evento onload do objeto imagen.
+      img.onload = function(){
+         //incluo a imagen no canvas
+         ctx.drawImage(img, 10, 10);
+      }
+   }
+}
+
+</script>
+</head>
+<body>
+
+<canvas id="meucanvas" width="largura" height="altura">
+Seu navegador não suporta canvas.
+</canvas>
+
+</body>
+</html>
